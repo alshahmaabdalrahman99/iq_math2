@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="2200" viewBox="0 0 1200 2200">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e87ff"/>
+      <stop offset="1" stop-color="#0f56c9"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-opacity=".09" stroke-width="2"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="2200" fill="url(#bg)"/>
+  <rect width="1200" height="2200" fill="url(#grid)"/>
+  <g fill="none" stroke="#c8ecff" stroke-width="12" stroke-linecap="round" opacity=".45">
+    <path d="M120 160 h48 M144 136 v48"/>
+    <path d="M300 280 l42 42 M342 280 l-42 42"/>
+    <path d="M975 165 h58"/>
+    <path d="M985 137 v58"/>
+    <circle cx="1035" cy="530" r="26"/>
+    <path d="M135 760 q36 42 72 0"/>
+    <path d="M915 850 q30 -48 60 0"/>
+    <path d="M1020 1260 l50 50 M1070 1260 l-50 50"/>
+    <path d="M165 1430 h46 M188 1407 v46"/>
+    <circle cx="245" cy="1815" r="22"/>
+    <path d="M930 1900 h54"/>
+  </g>
+  <g fill="#bde7ff" opacity=".55" font-family="Arial" font-size="74" font-weight="700">
+    <text x="120" y="420">=</text>
+    <text x="860" y="360">?</text>
+    <text x="180" y="1170">÷</text>
+    <text x="950" y="1660">×</text>
+    <text x="890" y="2020">√</text>
+  </g>
+</svg>
