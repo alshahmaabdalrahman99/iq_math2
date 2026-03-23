@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IQ Puzzel - Kies niveau</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="../css/styles.css" />
+  <img src="../img/trophy.svg" alt="Trofee" />
 </head>
 <body class="page game-page">
   <main class="phone">
@@ -15,19 +16,19 @@
         <article class="level-card">
           <h3>Makkelijk</h3>
           <p>Rustige start met eenvoudige getallen en duidelijke patronen.</p>
-          <a class="btn green" href="game.html">Speel Makkelijk</a>
+          <button class="btn green level-btn" id="easy-btn" type="button">Speel Makkelijk</button>
         </article>
 
         <article class="level-card">
           <h3>Gemiddeld</h3>
           <p>Goede mix van snelheid, logisch denken en rekeninzicht.</p>
-          <a class="btn blue" href="game.html">Speel Gemiddeld</a>
+          <button class="btn blue level-btn" id="medium-btn" type="button">Speel Gemiddeld</button>
         </article>
 
         <article class="level-card">
           <h3>Moeilijk</h3>
           <p>Sneller tempo, lastigere patronen en meer druk per vraag.</p>
-          <a class="btn red" href="game.html">Speel Moeilijk</a>
+          <button class="btn red level-btn" id="hard-btn" type="button">Speel Moeilijk</button>
         </article>
       </div>
 
@@ -36,5 +37,6 @@
       </div>
     </section>
   </main>
+  <script src="../js/script.js"></script>
 </body>
 </html>
