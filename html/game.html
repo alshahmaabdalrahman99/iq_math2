@@ -13,43 +13,52 @@
       <div class="status-row">
         <div class="status-item">
           <span>⭐ Punten</span>
-          <strong>150</strong>
+          <strong id="score-value">0</strong>
         </div>
         <div class="status-item">
           <span>⏱ Tijd</span>
-          <strong>01:12</strong>
+          <strong id="timer-value">90</strong>
         </div>
         <div class="status-item">
           <span>🎯 Pogingen</span>
-          <strong>2 / 3</strong>
+          <strong id="attempts-value">1 / 1</strong>
         </div>
       </div>
 
-      <div class="level-line">Niveau: Gemiddeld – Vraag 4 / 10</div>
+      <div class="level-line" id="level-line">Niveau: Makkelijk – Vraag 1 / 5</div>
 
       <section class="question-box">
-        <p>Als 3 x 4 = 18, en 5 x 2 = 17,<br>Hoeveel is 6 x 3?</p>
+        <p id="question-text">Hier komt de vraag</p>
       </section>
 
       <section class="answer-list" aria-label="Antwoordopties">
-        <button class="answer" type="button"><span class="letter">A.</span><span class="value">16</span></button>
-        <button class="answer" type="button"><span class="letter">B.</span><span class="value">18</span></button>
-        <button class="answer" type="button"><span class="letter">C.</span><span class="value">20</span></button>
-        <button class="answer" type="button"><span class="letter">D.</span><span class="value">22</span></button>
+        <button class="answer answer-btn" id="answer-btn-0" type="button">
+          <span class="letter">A.</span><span class="value">Antwoord 1</span>
+        </button>
+
+        <button class="answer answer-btn" id="answer-btn-1" type="button">
+          <span class="letter">B.</span><span class="value">Antwoord 2</span>
+        </button>
+
+        <button class="answer answer-btn" id="answer-btn-2" type="button">
+          <span class="letter">C.</span><span class="value">Antwoord 3</span>
+        </button>
+
+        <button class="answer answer-btn" id="answer-btn-3" type="button">
+          <span class="letter">D.</span><span class="value">Antwoord 4</span>
+        </button>
       </section>
 
       <div class="action-row">
-        <a class="btn blue" href="results.html">Controleer</a>
-        <button class="btn purple" type="button">Hint</button>
-        <a class="btn red" href="index.html">Stop</a>
+        <button class="btn blue" id="submit-btn" type="button">Controleer</button>
+        <button class="btn purple" id="hint-btn" type="button">Hint</button>
+        <button class="btn red" id="quit-btn" type="button">Stop</button>
       </div>
 
-      <p class="note">
-        Dit is de HTML/CSS-voorkant in dezelfde stijl als de mockup.
-        Voor klikgedrag, scores, timer en echte vraagdata voeg je zelf JavaScript toe.
-      </p>
+      <p class="note" id="feedback-text"></p>
     </section>
   </main>
+
   <script src="../js/script.js"></script>
 </body>
 </html>

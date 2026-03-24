@@ -53,19 +53,19 @@ a{ text-decoration:none; color:inherit; }
 .start-page{
   background:
     linear-gradient(rgba(20,98,211,.15), rgba(20,98,211,.15)),
-    url("img/bg-start.svg") center/cover no-repeat;
+    url("../img/bg-start.svg") center/cover no-repeat;
 }
 
 .game-page{
   background:
     linear-gradient(rgba(0,0,0,.05), rgba(0,0,0,.05)),
-    url("img/bg-game.svg") center/cover no-repeat;
+    url("../img/bg-game.svg") center/cover no-repeat;
 }
 
 .results-page{
   background:
     linear-gradient(rgba(15,7,38,.1), rgba(15,7,38,.1)),
-    url("img/bg-results.svg") center/cover no-repeat;
+    url("../img/bg-results.svg") center/cover no-repeat;
 }
 
 .screen-pad{
@@ -288,6 +288,10 @@ a{ text-decoration:none; color:inherit; }
   font-size: 1.05rem;
   width: 42px;
   color:#d8efff;
+}
+.answer.selected {
+  border: 3px solid #ffd54a;
+  transform: scale(1.02);
 }
 .answer .value{
   font-size: 1.1rem;
