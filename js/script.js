@@ -1,6 +1,11 @@
 // Voeg hier jouw JavaScript-logica toe.
 // Voorbeeldideeën:
 // - levelselectie opslaan
+// =========================
+// IQ MATH QUIZ - SCRIPT
+// =========================
+
+// -------------------------
 // 1. VRAGEN
 // -------------------------
 const allQuestions = [
@@ -142,6 +147,80 @@ const allQuestions = [
     hint: "Werk van links naar rechts."
   }
 ];
+
+// -------------------------
+// 2. GAME STATE
+// -------------------------
+const gameState = {
+  selectedLevel: null,
+  questions: [],
+  currentQuestionIndex: 0,
+  selectedAnswer: null,
+  score: 0,
+  correctAnswers: 0,
+  wrongAnswers: 0,
+  timeLeft: 90,
+  timerId: null,
+  gameOver: false
+};
+
+// -------------------------
+// 3. HELPERS
+// -------------------------
+function getCurrentPage() {
+  const path = window.location.pathname;
+  return path.split("/").pop();
+}
+
+function getQuestionsByLevel(level) {
+  return allQuestions.filter((question) => question.level === level);
+}
+
+function getCurrentQuestion() {
+  return gameState.questions[gameState.currentQuestionIndex];
+}
+
+function saveGameData() {
+  const data = {
+    selectedLevel: gameState.selectedLevel,
+    score: gameState.score,
+    correctAnswers: gameState.correctAnswers,
+    wrongAnswers: gameState.wrongAnswers,
+    timeLeft: gameState.timeLeft
+  };
+
+  localStorage.setItem("iqMathQuizResult", JSON.stringify(data));
+}
+
+function loadSavedLevel() {
+  return localStorage.getItem("iqMathQuizLevel");
+}
+
+function saveSelectedLevel(level) {
+  localStorage.setItem("iqMathQuizLevel", level);
+}
+
+function clearSelectedAnswerStyles() {
+  const answerButtons = document.querySelectorAll(".answer-btn");
+  answerButtons.forEach((button) => {
+    button.classList.remove("selected");
+  });
+}
+
+function disableAnswerButtons() {
+  const answerButtons = document.querySelectorAll(".answer-btn");
+  answerButtons.forEach((button) => {
+    button.disabled = true;
+  });
+}
+
+function enableAnswerButtons() {
+  const answerButtons = document.querySelectorAll(".answer-btn");
+  answerButtons.forEach((button) => {
+    button.disabled = false;
+  });
+}
+
 // - timer starten
 // - antwoorden controleren
 // - score bijwerken
