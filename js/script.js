@@ -171,13 +171,13 @@ function getCurrentPage() {
   const path = window.location.pathname;
   return path.split("/").pop();
 }
-
+//Deze functie haalt alleen de vragen op van één gekozen level.
 function getQuestionsByLevel(level) {
   return allQuestions.filter((question) => question.level === level);
 }
-
+//Deze functie geeft de vraag terug waar de speler nu mee bezig is
 function getCurrentQuestion() {
-  return gameState.questions[gameState.currentQuestionIndex];
+  return gameState.questions[gameState.currentQuestionIndex]; 
 }
 
 function saveGameData() {
@@ -221,7 +221,32 @@ function enableAnswerButtons() {
   });
 }
 
-// - timer starten
-// - antwoorden controleren
-// - score bijwerken
-// - resultaten opslaan in localStorage
+// -------------------------
+// 4. LEVELS PAGE
+// -------------------------
+function setupLevelsPage() {
+  const easyBtn = document.getElementById("easy-btn");
+  const mediumBtn = document.getElementById("medium-btn");
+  const hardBtn = document.getElementById("hard-btn");
+
+  if (!easyBtn || !mediumBtn || !hardBtn) {
+    return;
+  }
+
+  easyBtn.addEventListener("click", () => {
+    saveSelectedLevel("easy");
+    window.location.href = "game.html";
+  });
+
+  mediumBtn.addEventListener("click", () => {
+    saveSelectedLevel("medium");
+    window.location.href = "game.html";
+  });
+
+  hardBtn.addEventListener("click", () => {
+    saveSelectedLevel("hard");
+    window.location.href = "game.html";
+  });
+}
+
+
