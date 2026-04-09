@@ -1,9 +1,3 @@
-// Voeg hier jouw JavaScript-logica toe.
-// Voorbeeldideeën:
-// - levelselectie opslaan
-// =========================
-// IQ MATH QUIZ - SCRIPT
-// =========================
 
 // -------------------------
 // 1. VRAGEN
@@ -197,7 +191,7 @@ function loadSavedLevel() {
 }
 
 function saveSelectedLevel(level) {
-  localStorage.setItem("iqMathQuizLevel", level);
+  localStorage.setItem("iqMathQuizLevel", level); //Deze functie bewaart het level dat de speler heeft gekozen.
 }
 
 function clearSelectedAnswerStyles() {
@@ -249,4 +243,246 @@ function setupLevelsPage() {
   });
 }
 
+// -------------------------
+// 5. GAME PAGE
+// -------------------------
+function startGame() {
+  const selectedLevel = loadSavedLevel();
+
+  if (!selectedLevel) {
+    window.location.href = "levels.html";
+    return;
+  }
+
+  gameState.selectedLevel = selectedLevel;
+  gameState.questions = getQuestionsByLevel(selectedLevel);
+  gameState.currentQuestionIndex = 0;
+  gameState.selectedAnswer = null;
+  gameState.score = 0;
+  gameState.correctAnswers = 0;
+  gameState.wrongAnswers = 0;
+  gameState.timeLeft = 120;
+  gameState.gameOver = false;
+
+  renderQuestion();
+  startTimer();
+}
+
+function renderQuestion() {
+  const questionText = document.getElementById("question-text");
+  const scoreValue = document.getElementById("score-value");
+  const timerValue = document.getElementById("timer-value");
+  const attemptsValue = document.getElementById("attempts-value");
+  const levelLine = document.getElementById("level-line");
+  const feedbackText = document.getElementById("feedback-text");
+
+  const answerButtons = document.querySelectorAll(".answer-btn");
+  const currentQuestion = getCurrentQuestion();
+
+  if (!currentQuestion) {
+    endGame();
+    return;
+  }
+
+  questionText.textContent = currentQuestion.question;
+  scoreValue.textContent = gameState.score;
+  timerValue.textContent = gameState.timeLeft;
+  attemptsValue.textContent = "1 / 1";
+  levelLine.textContent = `Niveau: ${gameState.selectedLevel} – Vraag ${gameState.currentQuestionIndex + 1} / ${gameState.questions.length}`;
+  feedbackText.textContent = "";
+
+  answerButtons.forEach((button, index) => {
+    const valueSpan = button.querySelector(".value");
+    if (valueSpan) {
+      valueSpan.textContent = currentQuestion.options[index];
+    } else {
+      button.textContent = currentQuestion.options[index];
+    }
+
+    button.disabled = false;
+    button.classList.remove("selected");
+  });
+
+  gameState.selectedAnswer = null;
+}
+
+function selectAnswer(answer, clickedButton) {
+  gameState.selectedAnswer = answer;
+  clearSelectedAnswerStyles();
+  clickedButton.classList.add("selected");
+}
+
+function checkAnswer() {
+  const feedbackText = document.getElementById("feedback-text");
+  const scoreValue = document.getElementById("score-value");
+  const currentQuestion = getCurrentQuestion();
+
+  if (!currentQuestion) {
+    return;
+  }
+
+  if (!gameState.selectedAnswer) {
+    feedbackText.textContent = "Kies eerst een antwoord.";
+    return;
+  }
+
+  if (gameState.selectedAnswer === currentQuestion.correctAnswer) {
+    gameState.score += currentQuestion.points;
+    gameState.correctAnswers += 1;
+    feedbackText.textContent = "Goed antwoord!";
+  } else {
+    gameState.wrongAnswers += 1;
+    feedbackText.textContent = `Fout antwoord. Goed antwoord: ${currentQuestion.correctAnswer}`;
+  }
+
+  scoreValue.textContent = gameState.score;
+  disableAnswerButtons();
+
+  setTimeout(() => {
+    nextQuestion();
+  }, 1200);
+}
+
+function nextQuestion() {
+  gameState.currentQuestionIndex += 1;
+
+  if (gameState.currentQuestionIndex >= gameState.questions.length) {
+    endGame();
+    return;
+  }
+
+  renderQuestion();
+}
+
+function showHint() {
+  const feedbackText = document.getElementById("feedback-text");
+  const currentQuestion = getCurrentQuestion();
+
+  if (!currentQuestion) {
+    return;
+  }
+
+  feedbackText.textContent = `Hint: ${currentQuestion.hint}`;
+}
+
+function startTimer() {
+  const timerValue = document.getElementById("timer-value");
+
+  if (gameState.timerId) {
+    clearInterval(gameState.timerId);
+  }
+
+  gameState.timerId = setInterval(() => {
+    gameState.timeLeft -= 1;
+
+    if (timerValue) {
+      timerValue.textContent = gameState.timeLeft;
+    }
+
+    if (gameState.timeLeft <= 0) {
+      clearInterval(gameState.timerId);
+      endGame();
+    }
+  }, 1000);
+}
+
+function stopTimer() {
+  if (gameState.timerId) {
+    clearInterval(gameState.timerId);
+    gameState.timerId = null;
+  }
+}
+
+function endGame() {
+  if (gameState.gameOver) {
+    return;
+  }
+
+  gameState.gameOver = true;
+  stopTimer();
+  saveGameData();
+  window.location.href = "results.html";
+}
+
+function setupGamePage() {
+  const submitBtn = document.getElementById("submit-btn");
+  const hintBtn = document.getElementById("hint-btn");
+  const quitBtn = document.getElementById("quit-btn");
+  const answerButtons = document.querySelectorAll(".answer-btn");
+
+  if (!submitBtn || !hintBtn || !quitBtn || answerButtons.length === 0) {
+    return;
+  }
+
+  startGame();
+
+  answerButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const valueSpan = button.querySelector(".value");
+      const answer = valueSpan ? valueSpan.textContent : button.textContent;
+      selectAnswer(answer, button);
+    });
+  });
+
+  submitBtn.addEventListener("click", checkAnswer);
+  hintBtn.addEventListener("click", showHint);
+  quitBtn.addEventListener("click", endGame);
+}
+
+// -------------------------
+// 6. RESULTS PAGE
+// -------------------------
+function setupResultsPage() {
+  const resultScore = document.getElementById("result-score");
+  const resultCorrect = document.getElementById("result-correct");
+  const resultTime = document.getElementById("result-time");
+  const resultMessage = document.getElementById("result-message");
+
+  if (!resultScore || !resultCorrect || !resultTime || !resultMessage) {
+    return;
+  }
+
+  const savedResult = localStorage.getItem("iqMathQuizResult");
+
+  if (!savedResult) {
+    resultScore.textContent = "0";
+    resultCorrect.textContent = "0 / 5";
+    resultTime.textContent = "0";
+    resultMessage.textContent = "Geen resultaat gevonden.";
+    return;
+  }
+
+  const data = JSON.parse(savedResult);
+
+  resultScore.textContent = data.score;
+  resultCorrect.textContent = `${data.correctAnswers} / 5`;
+  resultTime.textContent = data.timeLeft;
+
+  if (data.score >= 40) {
+    resultMessage.textContent = "Uitstekend gedaan!";
+  } else if (data.score >= 20) {
+    resultMessage.textContent = "Goed gedaan!";
+  } else {
+    resultMessage.textContent = "Blijf oefenen!";
+  }
+}
+
+// -------------------------
+// 7. START SCRIPT
+// -------------------------
+document.addEventListener("DOMContentLoaded", () => {
+  const page = getCurrentPage();
+
+  if (page === "levels.html") {
+    setupLevelsPage();
+  }
+
+  if (page === "game.html") {
+    setupGamePage();
+  }
+
+  if (page === "results.html") {
+    setupResultsPage();
+  }
+});
 
