@@ -295,8 +295,9 @@ a{ text-decoration:none; color:inherit; }
 }
 .answer .value{
   font-size: 1.1rem;
+  color: white;
 }
-
+ 
 .action-row{
   display:grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -306,9 +307,9 @@ a{ text-decoration:none; color:inherit; }
 
 .result-title{
   text-align:center;
-  font-size: clamp(2.2rem, 11vw, 4rem);
+  font-size: clamp(2rem, 8vw, 3rem);
   line-height: .92;
-  font-weight: 900;
+  font-weight: 400;
   color:#ffd84e;
   margin: 10px 0 18px;
   text-transform: uppercase;
