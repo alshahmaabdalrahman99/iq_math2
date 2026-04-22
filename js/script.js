@@ -153,7 +153,7 @@ const gameState = {
   score: 0,
   correctAnswers: 0,
   wrongAnswers: 0,
-  timeLeft: 90,
+  timeLeft: 150,
   timerId: null,
   gameOver: false
 };
@@ -261,7 +261,7 @@ function startGame() {
   gameState.score = 0;
   gameState.correctAnswers = 0;
   gameState.wrongAnswers = 0;
-  gameState.timeLeft = 120;
+  gameState.timeLeft = 150;
   gameState.gameOver = false;
 
   renderQuestion();
@@ -403,7 +403,7 @@ function endGame() {
   saveGameData();
   window.location.href = "results.html";
 }
-
+//----setupGamePage----
 function setupGamePage() {
   const submitBtn = document.getElementById("submit-btn");
   const hintBtn = document.getElementById("hint-btn");
